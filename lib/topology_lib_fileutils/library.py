@@ -33,6 +33,7 @@ def copy_file(enode, file_path, shell=None):
     file_content = open(file_path).read()
     file_name = _get_filename(file_path)
     command = 'echo {} >> {}'.format(file_content, file_name)
+    print(command)
     response = enode(command)
     return response
     #_send_command(enode, command)
