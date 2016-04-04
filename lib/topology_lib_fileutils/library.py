@@ -21,8 +21,7 @@ topology_lib_fileutils communication library implementation.
 
 from __future__ import unicode_literals, absolute_import
 from __future__ import print_function, division
-
-# Add your library functions here.
+import re
 
 
 def _send_command(enode, command):
