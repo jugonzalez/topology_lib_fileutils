@@ -24,19 +24,18 @@ from __future__ import print_function, division
 import re
 
 
-def _send_command(enode, command):
-    enode.get_shell('bash').send_command(command)
-
 def _get_filename(file_path):
     pattern_name = re.compile('(((?<=/)|^)[^/]+$)')
     file_name = pattern_name.findall(file_path)[0][0]
     return file_name
 
-def copy_file(enode, file_path):
+def copy_file(enode, file_path, shell=None):
     file_content = open(file_path).read()
     file_name = _get_filename(file_path)
     command = 'echo {} >> {}'.format(file_content, file_name)
-    _send_command(enode, command)
+    response = enode(command)
+    return response
+    #_send_command(enode, command)
 
 __all__ = [
     # The Topology framework loads the functions that are in this list to be
