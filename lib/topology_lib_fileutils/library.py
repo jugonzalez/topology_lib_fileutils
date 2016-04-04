@@ -28,7 +28,7 @@ from __future__ import print_function, division
 def _send_command(enode, command):
     enode.get_shell('bash').send_command('scapy', matches='>>> ')
 
-def _get_filename(self, file_path):
+def _get_filename(file_path):
     pattern_name = re.compile('(?<=/)[^/]+$')
     file_name = pattern_name.findall(file_path)
     return file_name[0]
