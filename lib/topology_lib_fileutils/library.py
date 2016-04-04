@@ -25,7 +25,7 @@ import re
 
 
 def _send_command(enode, command):
-    enode.get_shell('bash').send_command('scapy', matches='>>> ')
+    enode.get_shell('bash').send_command(command)
 
 def _get_filename(file_path):
     pattern_name = re.compile('(((?<=/)|^)[^/]+$)')
