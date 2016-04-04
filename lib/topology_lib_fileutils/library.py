@@ -28,7 +28,7 @@ import requests
 def _get_filename(file_path):
     pattern_name = re.compile('(((?<=/)|^)[^/]+$)')
     file_name = pattern_name.findall(file_path)[0][0]
-    return file_nam
+    return file_name
 
 def _get_content_file(file_path):
     remote_path = re.compile('http[s]?://')
