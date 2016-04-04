@@ -22,25 +22,30 @@ topology_lib_fileutils communication library implementation.
 from __future__ import unicode_literals, absolute_import
 from __future__ import print_function, division
 import re
-
+import pexpect
+import requests
 
 def _get_filename(file_path):
     pattern_name = re.compile('(((?<=/)|^)[^/]+$)')
     file_name = pattern_name.findall(file_path)[0][0]
-    return file_name
+    return file_nam
 
-def copy_file(enode, file_path, shell=None):
-    file_content = open(file_path).read()
+def _get_content_file(file_path):
+    remote_path = re.compile('http[s]?://')
+    if remote_path.match(file_path):
+        command = 'wget {}'.format(file_path)
+        file_content = requests.get(file_path).text
+    else:
+        file_content = open(file_path).read()
+    return file_content
+
+def load_file(enode, file_path, shell=None):
+    file_content = _get_content_file(file_path)
     file_name = _get_filename(file_path)
     command = 'echo "{}" >> {}'.format(file_content, file_name)
-    print(command)
     response = enode(command)
     return response
-    #_send_command(enode, command)
 
 __all__ = [
-    # The Topology framework loads the functions that are in this list to be
-    # used as libraries, so, if you want your function to be loaded, add it
-    # here.
-    'copy_file'
+    'load_file'
 ]
