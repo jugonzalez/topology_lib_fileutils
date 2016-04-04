@@ -1,0 +1,11 @@
+{
+    "library_name": "topology_lib_fileutils",
+    "author": "Hewlett Packard Enterprise Development LP",
+    "email": "hpe-networking@lists.hp.com",
+    "repo_url": "https://github.com/HPENetworking/topology_lib_fileutils",
+    "doc_url": "https://github.com/HPENetworking/topology_lib_fileutils/tree/master/doc",
+    "project_name": "fileutils Communication Library for Topology",
+    "short_description": "A short description of your library.",
+    "year": "2016",
+    "version": "0.1.0"
+}

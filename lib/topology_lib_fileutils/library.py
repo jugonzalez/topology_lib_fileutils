@@ -1,0 +1,47 @@
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2016 Hewlett Packard Enterprise Development LP
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+"""
+topology_lib_fileutils communication library implementation.
+"""
+
+from __future__ import unicode_literals, absolute_import
+from __future__ import print_function, division
+
+# Add your library functions here.
+
+
+def _send_command(enode, command):
+    enode.get_shell('bash').send_command('scapy', matches='>>> ')
+
+def _get_filename(self, file_path):
+    pattern_name = re.compile('(?<=/)[^/]+$')
+    file_name = pattern_name.findall(file_path)
+    return file_name[0]
+
+def copy_file(enode, file_path):
+    file_content = open(file_path).read()
+    file_name = _get_filename(file_path)
+    command = 'echo {} >> {}'.format(file_content, file_name)
+    _send_command(enode, command)
+
+__all__ = [
+    # The Topology framework loads the functions that are in this list to be
+    # used as libraries, so, if you want your function to be loaded, add it
+    # here.
+    'copy_file'
+]
