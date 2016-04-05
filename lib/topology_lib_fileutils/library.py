@@ -62,8 +62,8 @@ def load_file(enode, src_file_path, dst_file_path=None, shell=None):
      Remote location is allowed only with http[s] protocol.
     :param str src_file_path: path at the remote host to save file.
     """
-    file_content = _get_content_file(file_path)
-    file_name = _get_filename(file_path)
+    file_content = _get_content_file(src_file_path)
+    file_name = _get_filename(src_file_path)
 
     if dst_file_path is None:
         dst_file_path = '/tmp'
