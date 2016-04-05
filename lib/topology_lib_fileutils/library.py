@@ -52,18 +52,23 @@ def _get_content_file(file_path):
         file_content = open(file_path).read()
     return file_content
 
-def load_file(enode, file_path, shell=None):
+def load_file(enode, src_file_path, dst_file_path=None, shell=None):
     """
     Load a given file to the remote host(enode)
     
     :param enode: Engine node to communicate with.
     :type enode: topology.platforms.base.BaseNode
-    :param str file_path: Local or remote location of a given file.
+    :param str src_file_path: Local or remote location of a given file.
      Remote location is allowed only with http[s] protocol.
+    :param str src_file_path: path at the remote host to save file.
     """
     file_content = _get_content_file(file_path)
     file_name = _get_filename(file_path)
-    command = 'echo "{}" >> {}'.format(file_content, file_name)
+
+    if dst_file_path is None:
+        dst_file_path = '/tmp'
+
+    command = 'echo "{}" >> {}/{}'.format(file_content, dst_file_path, file_name)
     response = enode(command)
     return response
 
