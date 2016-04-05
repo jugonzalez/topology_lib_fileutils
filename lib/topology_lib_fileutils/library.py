@@ -29,10 +29,8 @@ def _get_filename(file_path):
     """
     Get file name from a given path
 
-    :param file_path: Local or remote location of a given file.
+    :param file_path: path of a given file.
     :type file_path: string.
-
-    Access to a remote location is allowed only with http[s] protocol.
     """
     pattern_name = re.compile('(((?<=/)|^)[^/]+$)')
     file_name = pattern_name.findall(file_path)[0][0]
