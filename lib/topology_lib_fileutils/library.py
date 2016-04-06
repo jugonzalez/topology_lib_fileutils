@@ -46,8 +46,8 @@ def _get_content_file(file_path):
     """
     remote_path = re.compile('http[s]?://')
     if remote_path.match(file_path):
-        command = 'wget {}'.format(file_path)
         file_content = requests.get(file_path).text
+        assert file_content
     else:
         file_content = open(file_path).read()
     file_content = file_content.replace('"',"'")
@@ -64,6 +64,8 @@ def load_file(enode, src_file_path, dst_file_path=None, shell=None):
     :param str src_file_path: path at the remote host to save file.
     """
     file_content = _get_content_file(src_file_path)
+    assert 'Not Found' not in  file_content
+
     file_name = _get_filename(src_file_path)
 
     if dst_file_path is None:
@@ -71,7 +73,7 @@ def load_file(enode, src_file_path, dst_file_path=None, shell=None):
 
     command = 'echo "{}" >> {}/{}'.format(file_content, dst_file_path, file_name)
     response = enode(command)
-    return response
+    assert 'No such file or directory' not in response
 
 __all__ = [
     'load_file'
