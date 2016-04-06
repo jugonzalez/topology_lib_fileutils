@@ -50,6 +50,7 @@ def _get_content_file(file_path):
         file_content = requests.get(file_path).text
     else:
         file_content = open(file_path).read()
+    file_content.reaplace('"',"'")
     return file_content
 
 def load_file(enode, src_file_path, dst_file_path=None, shell=None):
