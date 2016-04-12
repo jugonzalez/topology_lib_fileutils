@@ -50,7 +50,7 @@ def _get_content_file(file_path):
         assert file_content
     else:
         file_content = open(file_path).read()
-    file_content = file_content.replace('"',"\"")
+    #file_content = file_content.replace('"',"\"")
     return file_content
 
 def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
@@ -71,7 +71,7 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     if dst_file_path is None:
         dst_file_path = '/tmp'
 
-    command = 'echo "{}" >> {}/{}'.format(file_content, dst_file_path, file_name)
+    command = "echo '{}' >> {}/{}".format(file_content, dst_file_path, file_name)
     response = enode(command)
     assert 'No such file or directory' not in response
 
