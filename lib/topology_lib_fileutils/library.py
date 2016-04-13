@@ -73,7 +73,7 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     # file_name = _get_filename(src_file_path)
 
     if dst_file_path is None:
-        dst_file_path = "/tm"
+        dst_file_path = "/tmp"
 
     command = "echo '{}' >> {}/{}".format(file_content, dst_file_path, file_name)
     response = enode(command)
