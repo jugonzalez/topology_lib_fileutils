@@ -68,7 +68,7 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     file_content = _get_content_file(src_file_path)
     assert "Not Found" not in  file_content
 
-    codecs.encode(txt.encode(), "hex")
+    file_content = codecs.encode(file_content.encode(), "hex")
 
     # file_name = _get_filename(src_file_path)
 
