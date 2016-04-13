@@ -66,18 +66,31 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     :param str src_file_path: path at the remote host to save file.
     """
     file_content = _get_content_file(src_file_path)
-    assert 'Not Found' not in  file_content
+    assert "Not Found" not in  file_content
 
     codecs.encode(txt.encode(), "hex")
 
     # file_name = _get_filename(src_file_path)
 
     if dst_file_path is None:
-        dst_file_path = '/tmp'
+        dst_file_path = "/tm"
 
     command = "echo '{}' >> {}/{}".format(file_content, dst_file_path, file_name)
     response = enode(command)
     assert 'No such file or directory' not in response
+    
+    cmds = ["python",
+            "file = open({}/{})".format(dst_file_path, file_name),
+            "file_content = codecs.decode(file.read(), 'hex').decode()",
+            "file.close()",
+            "file_w = open({}/{},'w')".format(dst_file_path, file_name),
+            "file_w.write(file_content)",
+            "file_w.close()"
+            ]
+    
+    for cmd in cmds:
+        enode.get_shell("bash").send_command(cmd, matches=">>> ")
+    enode.get_shell("bash").send_command("exit()")
 
 __all__ = [
     'load_file']
