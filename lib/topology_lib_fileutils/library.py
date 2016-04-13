@@ -78,11 +78,11 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     command = "echo {} >> {}/{}".format(file_content, dst_file_path, file_name)
     response = enode(command)
     assert 'No such file or directory' not in response
-   
-    """ 
+    
     cmds = ["python",
             "file = open('{}/{}')".format(dst_file_path, file_name),
-            "file_content = codecs.decode(file.read(), 'hex').decode()",
+            "file_content = file.read()[1:-1]"
+            "file_content = codecs.decode(file_content, 'hex').decode()",
             "file.close()",
             "file_w = open('{}/{}','w')".format(dst_file_path, file_name),
             "file_w.write(file_content)",
@@ -92,7 +92,6 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     for cmd in cmds:
         enode.get_shell("bash").send_command(cmd, matches=">>> ")
     enode.get_shell("bash").send_command("exit()")
-    """
 
 __all__ = [
     'load_file']
