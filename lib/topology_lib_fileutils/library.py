@@ -65,7 +65,7 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     response = enode(command)
     assert 'No such file or directory' not in response
     
-    # Instruction to be executed at the remote host
+    # Instructions to be executed at the remote host
     cmds = ["python",
             "import codecs",
             "file = open('{}/{}')".format(dst_file_path, file_name),
