@@ -27,17 +27,6 @@ import requests
 import codecs
 
 
-def _get_filename(file_path):
-    """
-    Get file name from a given path
-
-    :param file_path: path of a given file.
-    :type file_path: string.
-    """
-    pattern_name = re.compile('(((?<=/)|^)[^/]+$)')
-    file_name = pattern_name.findall(file_path)[0][0]
-    return file_name
-
 def _get_content_file(file_path):
     """
     Get file from the given location and return its content.
@@ -52,7 +41,6 @@ def _get_content_file(file_path):
         assert file_content
     else:
         file_content = open(file_path).read()
-    #file_content = file_content.replace('"',"\"")
     return file_content
 
 def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
@@ -68,23 +56,21 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     file_content = _get_content_file(src_file_path)
     assert "Not Found" not in  file_content
 
-    file_content = codecs.encode(file_content.encode(), "hex")
-
-    # file_name = _get_filename(src_file_path)
-
     if dst_file_path is None:
         dst_file_path = "/tmp"
 
-    command = "echo {} >> {}/{}".format(file_content, dst_file_path, file_name)
+    file_content = codecs.encode(file_content.encode(), "hex")
+
+    command = "echo {} > {}/{}".format(file_content, dst_file_path, file_name)
     response = enode(command)
     assert 'No such file or directory' not in response
     
+    # Instruction to be executed at the remote host
     cmds = ["python",
             "import codecs",
             "file = open('{}/{}')".format(dst_file_path, file_name),
             "file_content = file.read()[1:-1]",
             "file_content = codecs.decode(file_content, 'hex').decode()",
-            "file_content",
             "file.close()",
             "file_w = open('{}/{}','w')".format(dst_file_path, file_name),
             "file_w.write(file_content)",
@@ -92,9 +78,7 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
             ]
     
     for cmd in cmds:
-        print(cmd)
         enode.get_shell("bash").send_command(cmd, matches=">>> ")
-        print(enode.get_shell("bash").get_response())
     enode.get_shell("bash").send_command("exit()")
 
 __all__ = [
