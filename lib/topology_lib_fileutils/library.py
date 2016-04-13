@@ -80,7 +80,7 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     assert 'No such file or directory' not in response
     
     cmds = ["python",
-            "import codecs"
+            "import codecs",
             "file = open('{}/{}')".format(dst_file_path, file_name),
             "file_content = file.read()[1:-1]",
             "file_content = codecs.decode(file_content, 'hex').decode()",
@@ -98,4 +98,5 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     enode.get_shell("bash").send_command("exit()")
 
 __all__ = [
- mpo   'load_file']
+           'load_file'
+           ]
