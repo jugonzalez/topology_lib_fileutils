@@ -90,7 +90,9 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
             ]
     
     for cmd in cmds:
+        print(cmd)
         enode.get_shell("bash").send_command(cmd, matches=">>> ")
+        enode.get_shell("bash").get_response()
     enode.get_shell("bash").send_command("exit()")
 
 __all__ = [
