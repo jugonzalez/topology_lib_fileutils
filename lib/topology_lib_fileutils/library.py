@@ -83,6 +83,7 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
             "file = open('{}/{}')".format(dst_file_path, file_name),
             "file_content = file.read()[1:-1]"
             "file_content = codecs.decode(file_content, 'hex').decode()",
+            "file_content",
             "file.close()",
             "file_w = open('{}/{}','w')".format(dst_file_path, file_name),
             "file_w.write(file_content)",
@@ -92,7 +93,7 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     for cmd in cmds:
         print(cmd)
         enode.get_shell("bash").send_command(cmd, matches=">>> ")
-        enode.get_shell("bash").get_response()
+        print(enode.get_shell("bash").get_response())
     enode.get_shell("bash").send_command("exit()")
 
 __all__ = [
