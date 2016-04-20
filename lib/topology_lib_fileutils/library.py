@@ -62,7 +62,7 @@ def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
     file_content = codecs.encode(file_content.encode(), "hex")
 
     command = "echo {} > {}/{}".format(file_content, dst_file_path, file_name)
-    response = enode.get_shell("bash").send_command(command)
+    response = enode(command, shell='bash')
     assert 'No such file or directory' not in response
     
     # Instructions to be executed at the remote host
