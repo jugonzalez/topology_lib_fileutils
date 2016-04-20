@@ -43,7 +43,7 @@ def _get_content_file(file_path):
         file_content = open(file_path).read()
     return file_content
 
-def load_file(enode, file_name, src_file_path, dst_file_path=None, shell=None):
+def load_file(enode, file_name, src_file_path, dst_file_path=None):
     """
     Load a given file to the remote host(enode)
     
